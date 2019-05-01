@@ -10,13 +10,14 @@ defmodule SelectWeb.PageLive.Index do
     ]
 
     changeset = Select.Identity.change_user(%Select.Identity.User{})
-    {:ok, assign(socket, changeset: changeset, types: types, current_type: 2)}
+    {:ok, assign(socket, changeset: changeset, types: types, current_type: nil)}
   end
 
   def render(assigns), do: SelectWeb.PageView.render("index.html", assigns)
 
   def handle_event("submit", %{"user" => params}, socket) do
     IO.inspect(params, label: "SUBMITTED")
+    IO.inspect(socket.assigns)
 
     case Select.Identity.create_user(params) do
       {:ok, user} ->
@@ -29,6 +30,7 @@ defmodule SelectWeb.PageLive.Index do
 
   def handle_event("change", %{"user" => params}, socket) do
     IO.inspect(params, label: "CHANGED")
+    IO.inspect(socket.assigns)
 
     case params["type"] do
       "" ->

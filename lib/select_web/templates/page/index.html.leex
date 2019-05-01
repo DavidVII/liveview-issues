@@ -1,0 +1,25 @@
+<%= form_for @changeset, "#", [phx_submit: "submit", phx_change: "change"], fn f -> %>
+  <div>
+    <%= text_input f, :email, placeholder: "Email" %>
+    <%= error_tag f, :email %>
+  </div>
+
+  <div>
+    <%= select f, :type, @types, selected: @current_type %>
+    <%= error_tag f, :type %>
+  </div>
+
+  <%= if !@current_type do %>
+    <div>
+      <%= text_input f, :name, placeholder: "Custom Type" %>
+      <%= error_tag f, :name %>
+    </div>
+  <% else %>
+    <%= hidden_input f, :name, value: Enum.at(["Admin", "Staff" ,"Guest"], @current_type) %>
+  <% end %>
+
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>
